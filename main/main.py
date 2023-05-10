@@ -22,55 +22,64 @@
 """
 
 import utils
-import post
+#import post
 import user
-import others
+#import others
+#import GUI
+#import group
 
+"""
+1. 메인 메뉴 켜면 뭐해야됨?
+ - db 연결해야됨 -> 성공
+ - 사용자 관리 클래스 생성 -> 로그인, 회원가입 성공
+ - 그룹 검색 클래스 생성
+ - 교수님 찾기 클래스생성?
+ - 종료 버튼
+2. 사용자 관리 클래스에서 뭐해야됨
+ - 로그인, 회원가입 -> 정상 동작
+ - 그룹 확인 -> 그룹 확인 및 수정 동작
+ - 그룹 생성 -> 그룹 생성해야됨
+"""
+
+
+"""
+메인 펑션 해서 UI랑 연동해야됨
+class main_function:
+    def __init__(self):
+        
+        self.user_master = user.User_Manager()
+        self.user_
+"""
+
+from bson.objectid import ObjectId
+import pprint
 
 def main():
-    login_flag = False
-    print('--------->> well come to Team-play << --------------')
-    print('--------   please wait for loading     -------------')
+    """
+    su = um.sign_up()
+    nn = 'tempnn'
+    it = 'job'
+    su.set_user_data(id, pw, nn, it)
+    nm = 'John'
+    sex = 'male'
+    age = 20
+    tel = '010-0000-0000'
+    email = 'john@gmail.com'
+    major = 'ICE'
+    grade = 1
+    su.set_person_dat(nm, sex, age, tel, email, major, grade)
+    su.sign_up_db()
+    """
+    db = utils.Databass()
+    um = user.User_Manager(db)
+    #id = ObjectId('645bd3e1f44c39a04538a2a6')
+    #data = db.get_data('user_data', id)
+    #pprint.pprint(data)
+    id = 'tempID'
+    pw = 'temppw'
+    flag = um.login(id, pw)
+    um()
 
-    #로딩 해야됨
-    #utils.get_database()
-    print('-------------- loading complete ---------------------')
-    while True:
-
-        check, menu = utils.temp_gui(login_flag)
-
-        if check is True:
-            continue
-        
-        # 메뉴에 따른 동작
-        if menu == 1:
-            post.get_post()
-        elif menu == 2:
-            post.get_Teams()
-        # 9번은 종료키 
-        elif menu == 9:
-            break
-        else:
-            # 비회원 전용 
-            if login_flag is False:
-                if menu == 3:
-                    user_profile, login_flag = user.login()
-                else:
-                    print('WRONG INPUT!!!!')
-                    continue
-            # 회원 전용
-            else:
-                if menu == 3:
-                    user_profile.get_profile()
-                elif menu == 4:
-                    user.make_team()
-                elif menu ==5:
-                    others.get_Professr()
-                else:
-                    print('WRONG INPUT!!!!')
-                    continue
-        
-        print('>>>>>>>>> Return to  Main Menu <<<<<<<<<')
 
 
 if __name__ == "__main__":
