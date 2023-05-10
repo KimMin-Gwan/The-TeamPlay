@@ -1,3 +1,3 @@
-class Group_post():
+class post():
     def __init__():
         pass
