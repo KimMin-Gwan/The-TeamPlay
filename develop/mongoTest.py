@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 import datetime
 import pprint
+from bson.objectid import ObjectId
 
 def main():
 
@@ -14,10 +15,12 @@ def main():
 
     #post_id = posts.insert_one(post).inserted_id
 
-    pprint.pprint(posts.find_one({"author" : "Kim"}))
 
-    for post in posts.find({"author":"Lee"}):
-       pprint.pprint(post)
+    pprint.pprint(posts.find_one({"_id" : ObjectId('642ee2adbe776cb67dd387ad') }))
+    #pprint.pprint(posts.find_one({"author" : "Kim"}))
+
+    #for post in posts.find({"author":"Lee"}):
+       #pprint.pprint(post)
 
 
 
