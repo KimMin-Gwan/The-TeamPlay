@@ -1,26 +1,50 @@
-def temp_gui(login_flag):
-    menu = 0
-    trigger = 'n'
-    check = False
+from pymongo import MongoClient
+import datetime
+import pprint
+from bson.objectid import ObjectId
 
-    print('-------------   choose the menu   -------------------')
-    #로그인 여부 확인
-    print('1. Explore Posts')
-    print('2. Explore Teams')
-    print('3. Explore Collabo Posts')
-    if login_flag is False:
-        print('3. sign in')
-        print('9. Exit')
-    else:
-        print('3. See Profile')
-        print('4. Make Team')
-        print('5. Find Professor')
-        print('9. Exit')
-    print('Selected Menu : ', end='')
-    input(menu)
-    print('you choose {} ? (Y/N) : '.format(menu), end='')
-    input(trigger)
-    if trigger is 'N' or trigger is 'n':
-        check = True
+class Databass():
+    def __init__(self):
+        self.uri = "mongodb+srv://alsrhks2508:rlaalsrhks2508@mymongodbcluster1.960mxpd.mongodb.net/?retryWrites=true&w=majority"
+        self.client = MongoClient(self.uri)
+        self.db = self.client['the_teamPlay']
+        print(self.db)
+        self._login = False
+
+    def input_data(self, collection, dct):
+        target_col = self.db[collection]
+        dct["date"] = datetime.datetime.utcnow()
+        dct_id = target_col.insert_one(dct).inserted_id
+        print('input data in db(id) : ', dct_id)
+        return
     
-    return check, menu
+    def get_data_id(self, collection, ID):
+        try:
+            target_col = self.db[collection]
+            data = target_col.find_one({"ID": ID})
+            return data
+        except:
+            return -1
+
+    def get_data(self, collection, id):
+        try:
+            target_col = self.db[collection]
+            data = target_col.find_one({"_id": id})
+            return data
+        except:
+            return None
+
+"""
+def main():
+    db = Databass()
+    id = ObjectId('645bc392a0db139e5c1669ae')
+    data = db.get_data('user_data', id)
+    pprint.pprint(data)
+
+
+
+
+if __name__ == "__main__":
+    main()
+
+"""
