@@ -18,10 +18,23 @@ class Databass():
         print('input data in db(id) : ', dct_id)
         return
     
+    def get_data_list(self, collection, type):
+        target_col = self.db[collection]
+        cursor = target_col.find({'type': type})
+        return cursor
+    
     def get_data_id(self, collection, ID):
         try:
             target_col = self.db[collection]
             data = target_col.find_one({"ID": ID})
+            return data
+        except:
+            return -1
+
+    def get_data_index(self, collection, index):
+        try:
+            target_col = self.db[collection]
+            data = target_col.find_one({"index": index})
             return data
         except:
             return -1
@@ -33,6 +46,25 @@ class Databass():
             return data
         except:
             return None
+        
+    def update_data(self, collection, id, key, data):
+        try:
+            print("target :", key)
+            target_col = self.db[collection]
+            target_col.update_one({"_id" : id}, {"$set" : { key : data }})
+        except Exception as e:
+            print("Error :", str(e))
+            return 
+        
+    def get_size_col(self, collection):
+        count = 0
+        try:
+            target_col = self.db[collection]
+            count = target_col.count_documents({})
+        except:
+            count = -1
+        return count
+        
 
 """
 def main():
