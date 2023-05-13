@@ -26,7 +26,7 @@ import utils
 import user
 #import others
 #import GUI
-#import group
+import group
 
 """
 1. 메인 메뉴 켜면 뭐해야됨?
@@ -60,25 +60,43 @@ def main():
     nn = 'tempnn'
     it = 'job'
     su.set_user_data(id, pw, nn, it)
-    nm = 'John'
-    sex = 'male'
-    age = 20
+    nm = 'Tom'
+    sex = 'female'
+    age = 23
     tel = '010-0000-0000'
-    email = 'john@gmail.com'
-    major = 'ICE'
-    grade = 1
+    email = 'tom@gmail.com'
+    major = 'CS'
+    grade = 3
     su.set_person_dat(nm, sex, age, tel, email, major, grade)
     su.sign_up_db()
     """
-    db = utils.Databass()
-    um = user.User_Manager(db)
     #id = ObjectId('645bd3e1f44c39a04538a2a6')
     #data = db.get_data('user_data', id)
     #pprint.pprint(data)
-    id = 'tempID'
-    pw = 'temppw'
+    db = utils.Databass()
+    um = user.User_Manager(db)
+    id = 'tempId'
+    pw = 'temppW'
     flag = um.login(id, pw)
     um()
+    user1 = um.get_user()
+    gm = group.Group_Manger(db, user1)
+    #mk = gm.make_group()
+    #gn = 'new_group2'
+    #gp = 'nothing'
+    #gs = 4
+    #mk.set_group_data(gn, gp, gs)
+    #mk.make_group_db()
+    gm.set_groups()
+    data, _ = gm.set_show_group()
+    for arg in data:
+        arg()
+
+
+
+
+
+
 
 
 
