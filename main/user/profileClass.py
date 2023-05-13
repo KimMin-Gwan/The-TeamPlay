@@ -67,6 +67,9 @@ class User(Person):
     def get_num_group(self):
         return self._data[USER_DATA[4]]
 
+    def get_user_number(self):
+        return self.user_number
+
     def get_id(self):
         return self._data[USER_DATA[0]]
 
@@ -85,4 +88,7 @@ class User(Person):
     def set_property(self, property_name, value):
         self._data[property_name] = value
 
+    def set_group_list(self, index):
+        self._group_list.append(index)
+        self._data[USER_DATA[4]] += 1
 
