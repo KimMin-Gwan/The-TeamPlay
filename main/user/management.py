@@ -1,4 +1,4 @@
-from user import PERSON_DATA, USER_DATA
+from user import PERSON_DATA, USER_DATA, GROUP_POINT
 from utils import Databass
 import user
 
@@ -63,6 +63,8 @@ class Sign_up:
         self.user[USER_DATA[2]] = nn
         self.user[USER_DATA[3]] = it
         self.user[USER_DATA[4]] = ng
+        for arg in GROUP_POINT:
+            self.user[arg] = 0
 
     def set_person_dat(self, name, sex, age, tel, email, major, grade):
         self.user[PERSON_DATA[0]] = name
@@ -101,6 +103,9 @@ class User_Manager():
             return self.login_flag #유저 이름도 반환해야할듯
         else:
             return self.login_flag #유저이름 반환할것
+        
+    def get_user(self):
+        return self.user
 
     # 정상 동작함
     def logout(self):
