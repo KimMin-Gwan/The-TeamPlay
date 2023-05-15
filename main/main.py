@@ -25,7 +25,7 @@ import utils
 #import post
 import user
 #import others
-#import GUI
+import GUI
 import group
 
 """
@@ -42,55 +42,28 @@ import group
 """
 
 
-"""
-메인 펑션 해서 UI랑 연동해야됨
-class main_function:
+#메인 펑션 해서 UI랑 연동해야됨
+class Main_Function:
     def __init__(self):
-        
-        self.user_master = user.User_Manager()
-        self.user_
-"""
+        self.db = utils.Databass()
+
+    def user_management(self):
+        self.user_manager = user.User_Manager(self.db)
+        return self.user_manager
+    
+    def group_management(self):
+        self.now_user = self.user_management.get_user()
+        self.group_manager = group.Group_Manger(self.db, self.now_user)
+
 
 from bson.objectid import ObjectId
 import pprint
 
 def main():
-    """
-    su = um.sign_up()
-    nn = 'tempnn'
-    it = 'job'
-    su.set_user_data(id, pw, nn, it)
-    nm = 'Tom'
-    sex = 'female'
-    age = 23
-    tel = '010-0000-0000'
-    email = 'tom@gmail.com'
-    major = 'CS'
-    grade = 3
-    su.set_person_dat(nm, sex, age, tel, email, major, grade)
-    su.sign_up_db()
-    """
-    #id = ObjectId('645bd3e1f44c39a04538a2a6')
-    #data = db.get_data('user_data', id)
-    #pprint.pprint(data)
-    db = utils.Databass()
-    um = user.User_Manager(db)
-    id = 'tempId'
-    pw = 'temppW'
-    flag = um.login(id, pw)
-    um()
-    user1 = um.get_user()
-    gm = group.Group_Manger(db, user1)
-    #mk = gm.make_group()
-    #gn = 'new_group2'
-    #gp = 'nothing'
-    #gs = 4
-    #mk.set_group_data(gn, gp, gs)
-    #mk.make_group_db()
-    gm.set_groups()
-    data, _ = gm.set_show_group()
-    for arg in data:
-        arg()
+    main_function = Main_Function()
+    gui = GUI.MyGUI(main_function)
+    gui.mainloop()
+    
 
 
 
