@@ -35,5 +35,5 @@ class Group:
     def get_group_purpose(self):
         return self._group_purpose
 
-    def get_gourp_size(self):
+    def get_group_size(self):
         return self._size

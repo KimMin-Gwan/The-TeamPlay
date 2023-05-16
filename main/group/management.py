@@ -19,6 +19,7 @@ from group.groupClass import Group
 
 # 그룹 만드는 클래스
 # 정상동작함
+# 상속할껄
 class Make_Group:
     def __init__(self, db, user):
         self.db = db 
@@ -76,11 +77,13 @@ class Group_Manger:
         self._num_group = 0
         self._group_data = []
     
+    # 그룹 메니저 세팅?
     def set_groups(self):
         self._group_list = self._user.get_group_list()
         self._num_group = self._user.get_num_group()
         print('test : ', self._num_group)
         temp = None
+        self._group_data = []
         for arg in self._group_list:
             temp = self.db.get_data_id(GROUP_COL, arg)
             self._group_data.append(temp)
