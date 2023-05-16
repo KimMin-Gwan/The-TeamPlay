@@ -22,7 +22,7 @@
 """
 
 import utils
-#import post
+import post
 import user
 #import others
 import GUI
@@ -52,8 +52,13 @@ class Main_Function:
         return self.user_manager
     
     def group_management(self):
-        self.now_user = self.user_management.get_user()
+        self.now_user = self.user_manager.get_user()
         self.group_manager = group.Group_Manger(self.db, self.now_user)
+        return self.group_manager
+
+    def post_management(self):
+        self.post_manager = post.Post_Manager(self.db)
+        return self.post_manager
 
 
 from bson.objectid import ObjectId
@@ -64,13 +69,6 @@ def main():
     gui = GUI.MyGUI(main_function)
     gui.mainloop()
     
-
-
-
-
-
-
-
 
 
 if __name__ == "__main__":
