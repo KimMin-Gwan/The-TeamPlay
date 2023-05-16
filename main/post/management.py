@@ -1,12 +1,18 @@
 from post import Post
 from post.constant import MAIN_POST, GROUP_POST, POST_COL
+import pprint
 
 class Post_Manager:
-    def __init__(self, db, user, group):
+    def __init__(self, db, user = None, group = None):
         self.db = db
         self.user = user
-        self.user = None
-        self.group = None
+        self.group = group
+
+    def set_user(self, user):
+        self.user = user
+    
+    def set_group(self, group):
+        self.group = group
 
     # 홍보하기 버튼 누르면 실행할 함수
     def make_main_post(self):
@@ -14,14 +20,14 @@ class Post_Manager:
         user = self.user.get_nick_name()
         group = self.group.get_group_name()
         post.set_post(MAIN_POST, user, group)
-        return post
-    
+        return post  
+
     def make_group_post(self):
         post = Post()
         user = self.user.get_nick_name()
         group = self.group.get_group_name()
         post.set_post(GROUP_POST, user, group)
-        return post
+        return post  
 
     # 업로드 버튼을 누르면 실행할 함수
     def upload_db(self, post, title, text):
@@ -32,7 +38,7 @@ class Post_Manager:
     # 목록 보기 (type : str)
     def glance_board(self, type):
         # type은 두가지, 그룹이거나 메인이거나
-        cursor = self.db(POST_COL, type)
+        cursor = self.db.get_data_list(POST_COL, type)
         self.raw_post_data = cursor
 
         # 그룹 포스팅일때
@@ -40,9 +46,9 @@ class Post_Manager:
         if type is GROUP_POST:
             data_list = []
             group_name = self.group.get_group_name()
-            data_list = next((data for data in cursor if data.get('group') == group_name),
-                                None)
-        
+            data_list = [doc for doc in cursor if doc.get('group') == group_name]
+
+        pprint.pprint(data_list)
         glance_list = []
         for doc in data_list:
             data = {"_id" : doc["_id"],
