@@ -21,12 +21,13 @@ class Post():
         print("post date : ", self.date)
         print("post text: ", self.text)
 
-    def set_post(self, type, user, group, date = datetime.datetime.utcnow(),
+    def set_post(self, type, user, group, 
                  index = None, title = 't', text = 't'):
+        index = None
         self.type = type
         self.author = user
         self.group = group
-        self.date = date
+        self.date = None
         self.index = index
         self.title= title
         self.text= text
@@ -36,13 +37,13 @@ class Post():
         self.text = text
 
     def set_dict(self):
-        dict_post = POST
+        dict_post = {}
         dict_post['type'] = self.type
         dict_post['title'] = self.title
         dict_post['author'] = self.author
         dict_post['group'] = self.group
-        dict_post['date'] = self.date
         dict_post['text'] = self.text
+        return dict_post
 
 
 
