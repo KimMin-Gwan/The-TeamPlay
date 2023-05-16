@@ -15,7 +15,10 @@ class Login:
         #DB에서 아이디를 찾음
         col = user.USER_COL
         user_data = self.db.get_data_id(col, ID)
-        user_id = user_data['_id']
+        try:
+            user_id = user_data['_id']
+        except:
+            user_id = -1
         if user_id is -1:
             print("Wrong ID")
             return False
@@ -66,7 +69,7 @@ class Sign_up:
         for arg in GROUP_POINT:
             self.user[arg] = 0
 
-    def set_person_dat(self, name, sex, age, tel, email, major, grade):
+    def set_person_data(self, name, sex, age, tel, email, major, grade):
         self.user[PERSON_DATA[0]] = name
         self.user[PERSON_DATA[1]] = sex 
         self.user[PERSON_DATA[2]] = age 
