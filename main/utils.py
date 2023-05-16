@@ -21,14 +21,16 @@ class Databass():
     def get_data_list(self, collection, type):
         target_col = self.db[collection]
         cursor = target_col.find({'type': type})
-        return cursor
+        result = list(cursor)
+        return result 
     
     def get_data_id(self, collection, ID):
         try:
             target_col = self.db[collection]
             data = target_col.find_one({"ID": ID})
             return data
-        except:
+        except Exception as e:
+            print("Error :", str(e))
             return -1
 
     def get_data_index(self, collection, index):
