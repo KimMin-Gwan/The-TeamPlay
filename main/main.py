@@ -24,7 +24,7 @@
 import utils
 import post
 import user
-#import others
+import others
 import GUI
 import group
 
@@ -59,10 +59,15 @@ class Main_Function:
     def post_management(self):
         self.post_manager = post.Post_Manager(self.db)
         return self.post_manager
-
-
-from bson.objectid import ObjectId
-import pprint
+    
+    def professor_management(self):
+        target_col = others.PROF_COL
+        cursor = self.db.get_data_list(target_col)
+        data_list = []
+        for arg in cursor:
+            prof = others.Professor(arg)
+            data_list.append(prof)
+        return data_list
 
 def main():
     main_function = Main_Function()
