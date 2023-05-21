@@ -13,9 +13,7 @@ from group.groupClass import Group
 1. 그룹 클래스 만들기 정상 동작
 2. 포스팅 기능 만들기 이제 만들어야됨
 3. 포스팅에서 그룹에 참가하기 기능 구현
-
 """
-
 
 # 그룹 만드는 클래스
 # 정상동작함
@@ -31,12 +29,12 @@ class Make_Group:
         self.group[GROUP_DATA[1]] = name
         self.group[GROUP_DATA[2]] = purpose
         self.group[GROUP_DATA[3]] = size
+        self.group[GROUP_DATA[4]] = 'None'
         for i in range(size):
             if i == 0:
                 self.group['Master'] = self.user.get_nick_name()
             else:
                 self.group['Member' + str(i)] = 'None'
-
 
         temp_index  = self.db.get_size_col(GROUP_COL)
         if temp_index is not -1:
@@ -67,7 +65,6 @@ class Make_Group:
 2. 그룹 확인 : 가능
 3. 그룹 수정 : 불가능
 """
-
 
 class Group_Manger:
     def __init__(self, db, user):
@@ -105,9 +102,65 @@ class Group_Manger:
             self._groups.append(group)
         
         return self._groups, self._num_group
-
     
+    def set_issue(self, index, new_issue):
+        group = self._groups[index]
+        id = group.set_group_issue(new_issue)
+        self.db.update_data(GROUP_COL, id, 'issue', new_issue)
 
+    def join_group(self, group, txt):
         
+        group_data = self.db.get_data_name(GROUP_COL, group)
+        id = group_data["index"] # 그룹 index
+        name = self._user.get_nick_name()
+        data = {'index' : id,
+                'name' : name,
+                'txt' : txt
+                }
+
+        self.db.input_data('join_data', data)
+    
+    def show_join_txt(self, index):
+        group = self._groups[index]
+        group_id= group.get_group_index()
+        print(group_id)
+        data = self.db.get_data_list2('join_data', group_id)
+        print(data)
+        return data
+
+    def allow_join_group(self, index, data):
+        group = self._groups[index]
+        id = group.get_group_id()
+        name = data['name']
+        this_group = data['index']
+        member_list = group.get_group_member()
+        print(member_list)
+        i = 0
+        for arg in member_list:
+            print(arg)
+            if arg == 'None':
+                print('here')
+                group.set_group_member(i, name)
+                self.db.update_data(GROUP_COL, id, 'Member' + str(i), name)
+                break
+            else:
+                i += 1
+
+        user = self.db.get_data_nick_name(USER_COL, name)
+
+        self.db.update_data(USER_COL, 
+                            user['_id'], # 유저넘버
+                            'num_group', #그룹
+                            user['num_group'] + 1  # 그룹 인덱스
+                            )
+        self.db.update_data(USER_COL, 
+                            user['_id'], # 유저넘버
+                            GROUP_POINT[user['num_group']],#그룹
+                            this_group  # 그룹 인덱스
+                            )
+        self.db.delete_data('join_data', '_id', data['_id'])
+
+        print('정상등록')
+
 
 
