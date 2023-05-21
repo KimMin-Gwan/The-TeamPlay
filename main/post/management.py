@@ -49,18 +49,19 @@ class Post_Manager:
             data_list = [doc for doc in cursor if doc.get('group') == group_name]
 
         pprint.pprint(data_list)
-        glance_list = []
+        self.glance_list = []
         for doc in data_list:
             data = {"_id" : doc["_id"],
                     "title" : doc["title"],
                     }
-            glance_list.append(data)
-        return glance_list
+            self.glance_list.append(data)
+        return self.glance_list
             
     def load_post(self, index):
         cursor = self.raw_post_data
+        _id = self.glance_list[index]["_id"]
         # 인덱스로 데이터 찾아오기
-        doc = next((data for data in cursor if data.get('_id') == index),
+        doc = next((data for data in cursor if data.get('_id') == _id),
                               None)
 
         post = Post()
@@ -78,7 +79,7 @@ class Post_Manager:
         group = doc['group']
         date = doc['date']
         text = doc['text']
-        post.set_post(type, author, group, date, 
+        post.set_post(type, author, group, date,
                         index, title, text)
             
         return  post
