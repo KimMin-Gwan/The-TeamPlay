@@ -68,7 +68,7 @@ class User(Person):
         return self._data[USER_DATA[4]]
 
     def get_user_number(self):
-        return self.user_number
+        return self.user_number  
 
     def get_id(self):
         return self._data[USER_DATA[0]]
