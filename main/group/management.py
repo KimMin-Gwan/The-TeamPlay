@@ -162,5 +162,5 @@ class Group_Manger:
 
         print('정상등록')
 
-        print('new print')
+        print('new prin')
 
